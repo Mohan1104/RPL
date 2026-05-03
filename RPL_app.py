@@ -3,11 +3,11 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding, load_players
 
-st.set_page_config(page_title="RPL Cricket Analytics", page_icon="🏏", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="RPL Tournament Analytics", page_icon="🏏", layout="wide", initial_sidebar_state="expanded")
 apply_theme()
 
 st.markdown("# 🏏 RPL Cricket Analytics")
-st.markdown("*Comprehensive performance insights across 5 seasons of the Ryland Premier League*")
+st.markdown("*Analysis of the 5 seasons of the Ryland Premier League*")
 st.divider()
 
 bat = load_batting()
