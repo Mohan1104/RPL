@@ -1,6 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
-import sys, os
+import sys, os, json
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS, TEAM_COLORS
 
@@ -11,6 +11,46 @@ bat = load_batting()
 bowl = load_bowling()
 field = load_fielding()
 players = get_player_list()
+
+BIOS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'player_bios.json')
+RESULTS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'match_results.json')
+ROSTERS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'team_rosters.json')
+
+@st.cache_data
+def load_bios():
+    if os.path.exists(BIOS_FILE):
+        with open(BIOS_FILE) as f:
+            return json.load(f)
+    return {}
+
+@st.cache_data
+def load_results():
+    if os.path.exists(RESULTS_FILE):
+        with open(RESULTS_FILE) as f:
+            return json.load(f)
+    return []
+
+@st.cache_data
+def load_rosters():
+    if os.path.exists(ROSTERS_FILE):
+        with open(ROSTERS_FILE) as f:
+            return json.load(f)
+    return {}
+
+bios = load_bios()
+results = load_results()
+rosters = load_rosters()
+
+# Calculate champions per season
+champions = {}
+for r in results:
+    if r['match_type'] == 'Final':
+        s = str(r['season'])
+        w = r['winner']
+        if w == 'Abandoned':
+            champions[s] = [r['team1'], r['team2']]
+        else:
+            champions[s] = [w]
 
 st.markdown("# 👤 Player Profile")
 st.markdown("*Select a player to view detailed performance across seasons*")
@@ -43,6 +83,52 @@ teams = sorted(set(
 ))
 
 st.markdown(f"**Teams:** {', '.join(teams)} &nbsp;|&nbsp; **Seasons:** {', '.join(str(s) for s in seasons_played)}")
+st.divider()
+
+# Calculate championships for the player
+player_titles = 0
+for s, champs in champions.items():
+    team_data = rosters.get(s, {})
+    for c_team in champs:
+        t_roster = team_data.get(c_team, {})
+        if t_roster and player in t_roster.get('players', []):
+            player_titles += 0.5 if len(champs) > 1 else 1
+
+bio_data = bios.get(player, {})
+role = bio_data.get("role", "Player")
+description = bio_data.get("description", "An RPL player.")
+photo_path = bio_data.get("photo_path", "")
+
+# ── Top Bio Section ──
+c1, c2 = st.columns([1, 4])
+with c1:
+    photo_abs_path = os.path.join(os.path.dirname(__file__), '..', photo_path) if photo_path else ""
+    if photo_abs_path and os.path.exists(photo_abs_path):
+        st.image(photo_abs_path, use_container_width=True)
+    else:
+        # Placeholder Avatar
+        initials = "".join([n[0] for n in player.split()[:2]]).upper()
+        st.markdown(f"""
+        <div style="background:#1e293b;width:100%;aspect-ratio:1/1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;font-weight:800;color:#94a3b8;border:3px solid #334155;box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+            {initials}
+        </div>
+        """, unsafe_allow_html=True)
+        
+    st.markdown(f"<div style='text-align:center;margin-top:16px;font-weight:800;color:#f59e0b;letter-spacing:1px;text-transform:uppercase;font-size:0.9rem;'>{role}</div>", unsafe_allow_html=True)
+
+with c2:
+    st.markdown(f"<h2 style='margin-top:0;padding-top:0;'>{player}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<div style='color:#cbd5e1;font-size:1.15rem;margin-bottom:24px;line-height:1.6;'>{description}</div>", unsafe_allow_html=True)
+    
+    # High-level summary metrics
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Seasons", int(p_bat['season'].count()) if not p_bat.empty else 0)
+    m2.metric("Total Runs", int(p_bat['runs'].sum()) if not p_bat.empty else 0)
+    m3.metric("Total Wickets", int(p_bowl['wickets'].sum()) if not p_bowl.empty else 0)
+    
+    win_text = f"{int(player_titles)}" if player_titles.is_integer() else f"{player_titles}"
+    m4.metric("🏆 Championships", win_text)
+
 st.divider()
 
 # ── Season Breakdown ──

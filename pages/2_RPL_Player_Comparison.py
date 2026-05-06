@@ -19,7 +19,7 @@ st.divider()
 
 col1, col2 = st.columns([2, 1])
 with col1:
-    selected = st.multiselect("Select Players (up to 5)", players, max_selections=5)
+    selected = st.multiselect("Select Players (up to 8)", players, placeholder="Choose players to compare...")
 with col2:
     metric = st.selectbox("Metric", ["Runs Scored", "Wickets Taken", "Fielding Dismissals"])
 

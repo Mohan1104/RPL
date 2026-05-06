@@ -43,8 +43,10 @@ with col2:
 st.divider()
 st.markdown("#### 📌 Navigate using the sidebar to explore:")
 st.markdown("""
+- **Team Squads** — Rosters, captains, marquee players and championship titles
 - **Player Profile** — Deep-dive into any player's season-by-season performance
 - **Player Comparison** — Compare runs, wickets, or fielding across multiple players  
 - **All-Rounder Index** — Radar chart comparison of all-round ability
 - **Leaderboards** — Season and all-time rankings for batting, bowling & fielding
+- **Match Results** — Season-by-season match results, points tables and head-to-head records
 """)

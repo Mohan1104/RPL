@@ -1,0 +1,310 @@
+{
+  "1": {
+    "Gully Boyz": {
+      "captain": "Arpit Mathur",
+      "marquee": "Sunil S",
+      "players": [
+        "Aakash Borhade",
+        "Arpit Mathur",
+        "Bilal Mohammed",
+        "Danish Nazir",
+        "Mayank Jain",
+        "Mohan Manoharan",
+        "Mohit Katyal",
+        "Praveen Kamath",
+        "Pritam Kosalage",
+        "Sunil S",
+        "Vinay Dewan",
+        "Vinay Veliyat"
+      ]
+    },
+    "Ryland Challengers Birmingham": {
+      "captain": "Jofin Varghese",
+      "marquee": "Kapil Agiwal",
+      "players": [
+        "Anshul Goel",
+        "Anup Mishra",
+        "Charchit Kasliwal",
+        "Ganesh Seshadri",
+        "Gaurav Mehrotra",
+        "Govind Gupta",
+        "Jofin Varghese",
+        "Kapil Agiwal",
+        "Muhammad Usama Shahid",
+        "Shubham Bharti",
+        "Shyam Agrawal",
+        "Soumik Sarkar"
+      ]
+    },
+    "Ryland Royals": {
+      "captain": "Aswani",
+      "marquee": "Uday Pratap Singh",
+      "players": [
+        "Amit Gaurollu",
+        "Aswani",
+        "Darshan Tamboli",
+        "Dheeraj Joseph",
+        "Muhammed Fouzan",
+        "Pranav Oak",
+        "Rajat Handa",
+        "Sagar Seth",
+        "Shivam Garg",
+        "Srinath Ka",
+        "Uday Pratap Singh"
+      ]
+    },
+    "Ryland Super Kings": null
+  },
+  "2": {
+    "Gully Boyz": {
+      "captain": "Amar Parab",
+      "marquee": null,
+      "players": [
+        "Aakash Borhade",
+        "Amar Parab",
+        "Aswani",
+        "Bilal Mohammed",
+        "Charchit Kasliwal",
+        "Chetan Jain",
+        "Tapish Sharma",
+        "Tushar Pritam Naik",
+        "Vinay Veliyat"
+      ]
+    },
+    "Ryland Challengers Birmingham": {
+      "captain": "Mayank Jain",
+      "marquee": null,
+      "players": [
+        "Anup Mishra",
+        "Arpit Mathur",
+        "Mayank Jain",
+        "Muhammad Usama Shahid",
+        "Shivam Garg",
+        "Soumik Sarkar",
+        "Sourav Upadhyay",
+        "Srinath K A",
+        "Uday Pratap Singh"
+      ]
+    },
+    "Ryland Super Kings": {
+      "captain": "Sagar Seth",
+      "marquee": null,
+      "players": [
+        "Amardeep Singh",
+        "Ganesh Seshadri",
+        "Govind Gupta",
+        "Jofin Varghese",
+        "Kapil Agiwal",
+        "Mohan Manoharan",
+        "Nivas Pratty",
+        "Nohit Arora",
+        "Sagar Seth"
+      ]
+    },
+    "Ryland Royals": {
+      "captain": "Mohit Katyal",
+      "marquee": null,
+      "players": [
+        "Anshul Goel",
+        "Darshan Tamboli",
+        "Gaurav Mehrotra",
+        "Mohit Katyal",
+        "Muhammed Fouzan",
+        "Praveen Kamath",
+        "Shubham Bharti",
+        "Shyam Agrawal",
+        "Sid Jo"
+      ]
+    }
+  },
+  "3": {
+    "Gully Boyz": {
+      "captain": "Kapil Agiwal",
+      "marquee": "Pranav Oak",
+      "players": [
+        "Amit Kumar",
+        "Anshul Goel",
+        "Arpit Mathur",
+        "Kapil Agiwal",
+        "Muhammad Usama Shahid",
+        "Pranav Oak",
+        "Praveen Kamath",
+        "Rakeshbabji Yedla",
+        "Shivam Garg"
+      ]
+    },
+    "Ryland Challengers Birmingham": {
+      "captain": "Uday Pratap Singh",
+      "marquee": "Ganesh Seshadri",
+      "players": [
+        "Amardeep Singh",
+        "Eddie Pinder",
+        "Ganesh Seshadri",
+        "Jofin Varghese",
+        "Mayank Jain",
+        "Sid Jo",
+        "Sourav Upadhyay",
+        "Srinivas Rao",
+        "Uday Pratap Singh"
+      ]
+    },
+    "Ryland Super Kings": {
+      "captain": "Sunil S",
+      "marquee": "Shubham Bharti",
+      "players": [
+        "Aswani",
+        "Muhammed Fouzan",
+        "Pritam Kosalage",
+        "Rajarshi Bhattacharyya",
+        "Sagar Seth",
+        "Shubham Bharti",
+        "Srinath K A",
+        "Sunil S",
+        "Vinay Veliyat"
+      ]
+    },
+    "Ryland Royals": {
+      "captain": "Gaurav Mehrotra",
+      "marquee": "Charchit Kasliwal",
+      "players": [
+        "Aakash Borhade",
+        "Anup Mishra",
+        "Charchit Kasliwal",
+        "Gaurav Mehrotra",
+        "Govind Gupta",
+        "Mohit Katyal",
+        "Nivas Pratty",
+        "Soumik Sarkar",
+        "Vaibhav Ganatra"
+      ]
+    }
+  },
+  "4": {
+    "Gully Boyz": {
+      "captain": "Bilal Mohammed",
+      "marquee": "Mohan Manoharan",
+      "players": [
+        "Aswani",
+        "Bilal Mohammed",
+        "Charchit Kasliwal",
+        "Darshan Tamboli",
+        "Mayank Jain",
+        "Mohan Manoharan",
+        "Pritam Kosalage",
+        "Sunil S",
+        "Uday Pratap Singh",
+        "Vaibhav Ganatra"
+      ],
+      "substitutes": [
+        "Uday Pratap Singh"
+      ]
+    },
+    "Ryland Challengers Birmingham": {
+      "captain": "Muhammed Fouzan",
+      "marquee": "Aakash Borhade",
+      "players": [
+        "Aakash Borhade",
+        "Akshay",
+        "Anup Mishra",
+        "Arpit Mathur",
+        "Chetan Jain",
+        "Danish Nazir",
+        "Jofin Varghese",
+        "Muhammed Fouzan",
+        "Srinivas Rao"
+      ]
+    },
+    "Ryland Super Kings": {
+      "captain": "Soumik Sarkar",
+      "marquee": "Sourav Upadhyay",
+      "players": [
+        "Eddie Pinder",
+        "Govind Gupta",
+        "Kapil Agiwal",
+        "Michael Butler",
+        "Pranav Oak",
+        "Rakeshbabji Yedla",
+        "Sagar Seth",
+        "Soumik Sarkar",
+        "Sourav Upadhyay"
+      ]
+    },
+    "Ryland Royals": {
+      "captain": "Srinath K A",
+      "marquee": "Tushar Pritam Naik",
+      "players": [
+        "Amarnath Parab",
+        "Anshul Goel",
+        "Mohit Katyal",
+        "Muhammad Usama Shahid",
+        "Rajarshi Bhattacharyya",
+        "Shivam Garg",
+        "Srinath K A",
+        "Tapish Sharma",
+        "Tushar Pritam Naik",
+        "Vinay Veliyat"
+      ],
+      "substitutes": [
+        "Shivam Garg"
+      ]
+    }
+  },
+  "5": {
+    "Gully Boyz": {
+      "captain": "Govind Gupta",
+      "marquee": null,
+      "players": [
+        "Amardeep Singh",
+        "Gaurav Mehrotra",
+        "Govind Gupta",
+        "Jofin Varghese",
+        "Mohan Manoharan",
+        "Shivam Garg",
+        "Sourav Upadhyay",
+        "Srinath K A"
+      ]
+    },
+    "Ryland Challengers Birmingham": {
+      "captain": "Anshul Goel",
+      "marquee": null,
+      "players": [
+        "Adarsh Sanas",
+        "Anshul Goel",
+        "Anuviresh S",
+        "Arun Rao Bhaktavatsala",
+        "Bilal Mohammed",
+        "Muhammed Fouzan",
+        "Rajarshi Bhattacharyya",
+        "Tushar Pritam Naik"
+      ]
+    },
+    "Ryland Super Kings": {
+      "captain": "Anup Mishra",
+      "marquee": null,
+      "players": [
+        "Abrar Syed",
+        "Anup Mishra",
+        "Aswani",
+        "Kapil Agiwal",
+        "Mayank Jain",
+        "Praveen Kamath",
+        "Pritam Kosalage",
+        "Subodh Pawar"
+      ]
+    },
+    "Ryland Royals": {
+      "captain": "Charchit Kasliwal",
+      "marquee": null,
+      "players": [
+        "Arpit Mathur",
+        "Charchit Kasliwal",
+        "Darshan Tamboli",
+        "Dhruvin Modi",
+        "Gokul Radhakrishnan",
+        "Shubham Bharti",
+        "Sunil S",
+        "Uday Pratap Singh"
+      ]
+    }
+  }
+}

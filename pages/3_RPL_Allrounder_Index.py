@@ -18,7 +18,7 @@ st.markdown("# 🕸️ All-Rounder Index")
 st.markdown("*Compare all-round performance using radar charts — normalized across all players*")
 st.divider()
 
-selected = st.multiselect("Select Players to Compare (up to 5)", players, max_selections=5)
+selected = st.multiselect("Select Players to Compare (up to 8)", players, placeholder="Choose players...")
 
 if len(selected) < 1:
     st.info("Select at least 1 player to view their all-rounder profile")

@@ -1,0 +1,307 @@
+{
+    "Aakash Borhade": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 5 victims (wickets) so far.",
+        "photo_path": "assets/players/aakash_borhade.png"
+    },
+    "Abrar Syed": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 2 victims (wickets) so far.",
+        "photo_path": "assets/players/abrar_syed.png"
+    },
+    "Adarsh Sanas": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 6 wickets in the bag. Once ran through a batting lineup to grab 6 wickets in a single match.",
+        "photo_path": "assets/players/adarsh_sanas.png"
+    },
+    "Akshay": {
+        "role": "Player",
+        "description": "An RPL regular with 1 appearances. Vibes: immaculate.",
+        "photo_path": "assets/players/akshay.png"
+    },
+    "Amar Parab": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 2 victims (wickets) so far.",
+        "photo_path": "assets/players/amar_parab.png"
+    },
+    "Amardeep Singh": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 13 victims (wickets) so far. Has a lethal best performance of 6 wickets.",
+        "photo_path": "assets/players/amardeep_singh.png"
+    },
+    "Amarnath Parab": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 1 scalps. Probably plotting their next dismissal right now.",
+        "photo_path": "assets/players/amarnath_parab.png"
+    },
+    "Amit Gaurollu": {
+        "role": "Player",
+        "description": "An RPL regular with 1 appearances. Vibes: immaculate.",
+        "photo_path": "assets/players/amit_gaurollu.png"
+    },
+    "Amit Kumar": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 3 scalps. Probably plotting their next dismissal right now. Their best figures of 3 wickets caused sheer panic on the field.",
+        "photo_path": "assets/players/amit_kumar.png"
+    },
+    "Anshul Goel": {
+        "role": "All-Rounder",
+        "description": "Why choose between batting and bowling when you can do both? 61 runs and 7 wickets prove it. Their best figures of 3 wickets caused sheer panic on the field.",
+        "photo_path": "assets/players/anshul_goel.png"
+    },
+    "Anup Mishra": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 15 scalps. Probably plotting their next dismissal right now. Has a lethal best performance of 5 wickets.",
+        "photo_path": "assets/players/anup_mishra.png"
+    },
+    "Anuviresh S": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 1 victims (wickets) so far.",
+        "photo_path": "assets/players/anuviresh_s.png"
+    },
+    "Arpit Mathur": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 25 wickets in the bag. Has a lethal best performance of 8 wickets. Currently haunting the top 5 all-time wicket-takers leaderboard.",
+        "photo_path": "assets/players/arpit_mathur.png"
+    },
+    "Arun Rao Bhaktavatsala": {
+        "role": "Player",
+        "description": "A true team player with 1 solid appearances.",
+        "photo_path": "assets/players/arun_rao_bhaktavatsala.png"
+    },
+    "Aswani": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 13 scalps. Probably plotting their next dismissal right now. Once ran through a batting lineup to grab 6 wickets in a single match.",
+        "photo_path": "assets/players/aswani.png"
+    },
+    "Bilal Mohammed": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 8 wickets in the bag. Has a lethal best performance of 3 wickets.",
+        "photo_path": "assets/players/bilal_mohammed.png"
+    },
+    "Charchit Kasliwal": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 14 scalps. Probably plotting their next dismissal right now. Once ran through a batting lineup to grab 5 wickets in a single match.",
+        "photo_path": "assets/players/charchit_kasliwal.png"
+    },
+    "Chetan Jain": {
+        "role": "Player",
+        "description": "Always ready to step up, having made 2 appearances in the league.",
+        "photo_path": "assets/players/chetan_jain.png"
+    },
+    "Danish Nazir": {
+        "role": "Player",
+        "description": "A true team player with 2 solid appearances.",
+        "photo_path": "assets/players/danish_nazir.png"
+    },
+    "Darshan Tamboli": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 6 victims (wickets) so far.",
+        "photo_path": "assets/players/darshan_tamboli.png"
+    },
+    "Dheeraj Joseph": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 3 scalps. Probably plotting their next dismissal right now. Has a lethal best performance of 3 wickets.",
+        "photo_path": "assets/players/dheeraj_joseph.png"
+    },
+    "Dhruvin Modi": {
+        "role": "Player",
+        "description": "Always ready to step up, having made 0 appearances in the league.",
+        "photo_path": "assets/players/dhruvin_modi.png"
+    },
+    "Eddie Pinder": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 3 scalps. Probably plotting their next dismissal right now.",
+        "photo_path": "assets/players/eddie_pinder.png"
+    },
+    "Ganesh Seshadri": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 6 scalps. Probably plotting their next dismissal right now. Once ran through a batting lineup to grab 3 wickets in a single match.",
+        "photo_path": "assets/players/ganesh_seshadri.png"
+    },
+    "Gaurav Mehrotra": {
+        "role": "All-Rounder",
+        "description": "Why choose between batting and bowling when you can do both? 61 runs and 14 wickets prove it. Once decided to absolutely ruin the opposition's day with a blistering 34. Once ran through a batting lineup to grab 7 wickets in a single match.",
+        "photo_path": "assets/players/gaurav_mehrotra.png"
+    },
+    "Gokul Radhakrishnan": {
+        "role": "Player",
+        "description": "Always ready to step up, having made 1 appearances in the league.",
+        "photo_path": "assets/players/gokul_radhakrishnan.png"
+    },
+    "Govind Gupta": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 5 wickets in the bag. Their best figures of 3 wickets caused sheer panic on the field.",
+        "photo_path": "assets/players/govind_gupta.png"
+    },
+    "Jofin Varghese": {
+        "role": "All-Rounder",
+        "description": "Why choose between batting and bowling when you can do both? 107 runs and 11 wickets prove it. Holds a highest score of 37, a knock still talked about in the dressing room. Has a lethal best performance of 4 wickets. Also casually sits among the top 5 highest run-scorers in league history. No big deal.",
+        "photo_path": "assets/players/jofin_varghese.png"
+    },
+    "Kapil Agiwal": {
+        "role": "All-Rounder",
+        "description": "A certified dual-threat, casually dropping 149 runs and snatching 31 wickets. Capable of serious damage, as proven by their top score of 54. Their best figures of 12 wickets caused sheer panic on the field. Also casually sits among the top 5 highest run-scorers in league history. No big deal. Currently haunting the top 5 all-time wicket-takers leaderboard.",
+        "photo_path": "assets/players/kapil_agiwal.png"
+    },
+    "Mayank Jain": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 22 wickets in the bag. Their best figures of 7 wickets caused sheer panic on the field. Currently haunting the top 5 all-time wicket-takers leaderboard.",
+        "photo_path": "assets/players/mayank_jain.png"
+    },
+    "Michael Butler": {
+        "role": "Player",
+        "description": "An RPL regular with 1 appearances. Vibes: immaculate.",
+        "photo_path": "assets/players/michael_butler.png"
+    },
+    "Mohan Manoharan": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 7 scalps. Probably plotting their next dismissal right now. Has a lethal best performance of 3 wickets.",
+        "photo_path": "assets/players/mohan_manoharan.png"
+    },
+    "Mohit Katyal": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 8 victims (wickets) so far. Their best figures of 4 wickets caused sheer panic on the field.",
+        "photo_path": "assets/players/mohit_katyal.png"
+    },
+    "Muhammad Usama Shahid": {
+        "role": "Batsman",
+        "description": "Paid by the run, apparently. Has generously contributed 53 runs to the scoreboard.",
+        "photo_path": "assets/players/muhammad_usama_shahid.png"
+    },
+    "Muhammed Fouzan": {
+        "role": "All-Rounder",
+        "description": "A certified dual-threat, casually dropping 145 runs and snatching 8 wickets. Holds a highest score of 44, a knock still talked about in the dressing room. Has a lethal best performance of 3 wickets. Also casually sits among the top 5 highest run-scorers in league history. No big deal.",
+        "photo_path": "assets/players/muhammed_fouzan.png"
+    },
+    "Nivas Pratty": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 2 scalps. Probably plotting their next dismissal right now.",
+        "photo_path": "assets/players/nivas_pratty.png"
+    },
+    "Nohit Arora": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 5 wickets in the bag. Has a lethal best performance of 5 wickets.",
+        "photo_path": "assets/players/nohit_arora.png"
+    },
+    "Pranav Oak": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 5 scalps. Probably plotting their next dismissal right now. Once ran through a batting lineup to grab 4 wickets in a single match.",
+        "photo_path": "assets/players/pranav_oak.png"
+    },
+    "Praveen Kamath": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 4 scalps. Probably plotting their next dismissal right now.",
+        "photo_path": "assets/players/praveen_kamath.png"
+    },
+    "Pritam Kosalage": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 2 scalps. Probably plotting their next dismissal right now.",
+        "photo_path": "assets/players/pritam_kosalage.png"
+    },
+    "Rajarshi Bhattacharyya": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 12 wickets in the bag. Once ran through a batting lineup to grab 5 wickets in a single match.",
+        "photo_path": "assets/players/rajarshi_bhattacharyya.png"
+    },
+    "Rajat Handa": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 1 scalps. Probably plotting their next dismissal right now.",
+        "photo_path": "assets/players/rajat_handa.png"
+    },
+    "Rakeshbabji Yedla": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 7 wickets in the bag. Has a lethal best performance of 6 wickets.",
+        "photo_path": "assets/players/rakeshbabji_yedla.png"
+    },
+    "Sagar Seth": {
+        "role": "All-Rounder",
+        "description": "The ultimate package deal. Brings 55 runs and 20 wickets to the table, and probably brings the post-match snacks too. Has a lethal best performance of 7 wickets. Currently haunting the top 5 all-time wicket-takers leaderboard.",
+        "photo_path": "assets/players/sagar_seth.png"
+    },
+    "Shivam Garg": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 16 wickets in the bag. Has a lethal best performance of 6 wickets.",
+        "photo_path": "assets/players/shivam_garg.png"
+    },
+    "Shubham Bharti": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 15 victims (wickets) so far. Once ran through a batting lineup to grab 11 wickets in a single match.",
+        "photo_path": "assets/players/shubham_bharti.png"
+    },
+    "Shyam Agrawal": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 10 victims (wickets) so far. Has a lethal best performance of 5 wickets.",
+        "photo_path": "assets/players/shyam_agrawal.png"
+    },
+    "Sid Jo": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 4 scalps. Probably plotting their next dismissal right now. Once ran through a batting lineup to grab 3 wickets in a single match.",
+        "photo_path": "assets/players/sid_jo.png"
+    },
+    "Soumik Sarkar": {
+        "role": "All-Rounder",
+        "description": "Why choose between batting and bowling when you can do both? 71 runs and 12 wickets prove it. Capable of serious damage, as proven by their top score of 47. Has a lethal best performance of 4 wickets. Also casually sits among the top 5 highest run-scorers in league history. No big deal.",
+        "photo_path": "assets/players/soumik_sarkar.png"
+    },
+    "Sourav Upadhyay": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 12 wickets in the bag. Once ran through a batting lineup to grab 4 wickets in a single match.",
+        "photo_path": "assets/players/sourav_upadhyay.png"
+    },
+    "Srinath K A": {
+        "role": "Bowler",
+        "description": "Hand them the ball and watch the magic happen. 8 wickets in the bag. Has a lethal best performance of 3 wickets.",
+        "photo_path": "assets/players/srinath_k_a.png"
+    },
+    "Srinath Ka": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 1 victims (wickets) so far.",
+        "photo_path": "assets/players/srinath_ka.png"
+    },
+    "Srinivas Rao": {
+        "role": "Player",
+        "description": "An RPL regular with 2 appearances. Vibes: immaculate.",
+        "photo_path": "assets/players/srinivas_rao.png"
+    },
+    "Subodh Pawar": {
+        "role": "Player",
+        "description": "An RPL regular with 1 appearances. Vibes: immaculate.",
+        "photo_path": "assets/players/subodh_pawar.png"
+    },
+    "Sunil S": {
+        "role": "Batsman",
+        "description": "Bowlers collectively sigh when they walk to the crease. Has racked up 79 runs so far. Once decided to absolutely ruin the opposition's day with a blistering 35. Also casually sits among the top 5 highest run-scorers in league history. No big deal.",
+        "photo_path": "assets/players/sunil_s.png"
+    },
+    "Tapish Sharma": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 3 victims (wickets) so far.",
+        "photo_path": "assets/players/tapish_sharma.png"
+    },
+    "Tushar Pritam Naik": {
+        "role": "Batsman",
+        "description": "Bowlers collectively sigh when they walk to the crease. Has racked up 47 runs so far. Once ran through a batting lineup to grab 3 wickets in a single match.",
+        "photo_path": "assets/players/tushar_pritam_naik.png"
+    },
+    "Uday Pratap Singh": {
+        "role": "Bowler",
+        "description": "A certified wicket-taker with 18 scalps. Probably plotting their next dismissal right now. Their best figures of 5 wickets caused sheer panic on the field. Currently haunting the top 5 all-time wicket-takers leaderboard.",
+        "photo_path": "assets/players/uday_pratap_singh.png"
+    },
+    "Vaibhav Ganatra": {
+        "role": "Player",
+        "description": "An RPL regular with 2 appearances. Vibes: immaculate.",
+        "photo_path": "assets/players/vaibhav_ganatra.png"
+    },
+    "Vinay Dewan": {
+        "role": "Player",
+        "description": "A true team player with 0 solid appearances.",
+        "photo_path": "assets/players/vinay_dewan.png"
+    },
+    "Vinay Veliyat": {
+        "role": "Bowler",
+        "description": "Stumps hate them. Batters fear them. Has claimed 6 victims (wickets) so far.",
+        "photo_path": "assets/players/vinay_veliyat.png"
+    }
+}

@@ -368,13 +368,11 @@
     "name": "Mohan Manoharan",
     "teams": [
       "Gully Boyz",
-      "Ryland Royals",
       "Ryland Super Kings"
     ],
     "seasons": [
       1,
       2,
-      3,
       4,
       5
     ]
@@ -705,9 +703,11 @@
   {
     "name": "Vaibhav Ganatra",
     "teams": [
-      "Gully Boyz"
+      "Gully Boyz",
+      "Ryland Royals"
     ],
     "seasons": [
+      3,
       4
     ]
   },
