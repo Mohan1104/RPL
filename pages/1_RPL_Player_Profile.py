@@ -1,6 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
-import sys, os, json
+import sys, os, json, random
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS, TEAM_COLORS
 
@@ -56,11 +56,14 @@ st.markdown("# 👤 Player Profile")
 st.markdown("*Select a player to view detailed performance across seasons*")
 st.divider()
 
+if 'random_player_idx' not in st.session_state:
+    st.session_state.random_player_idx = random.randint(0, len(players) - 1)
+
 col1, col2 = st.columns([1, 2])
 with col1:
-    player = st.selectbox("Select Player", players, index=0)
+    player = st.selectbox("Select Player", players, index=st.session_state.random_player_idx)
 with col2:
-    view = st.radio("View", ["Season Breakdown", "Aggregate", "Trends"], horizontal=True)
+    view = st.radio("View", ["Season Breakdown", "Aggregate", "Trends"], index=2, horizontal=True)
 
 if not player:
     st.info("Please select a player")

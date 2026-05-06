@@ -41,15 +41,6 @@
     ]
   },
   {
-    "name": "Amar Parab",
-    "teams": [
-      "Gully Boyz"
-    ],
-    "seasons": [
-      2
-    ]
-  },
-  {
     "name": "Amardeep Singh",
     "teams": [
       "Gully Boyz",
@@ -65,9 +56,11 @@
   {
     "name": "Amarnath Parab",
     "teams": [
+      "Gully Boyz",
       "Ryland Royals"
     ],
     "seasons": [
+      2,
       4
     ]
   },
@@ -613,19 +606,11 @@
       "Ryland Super Kings"
     ],
     "seasons": [
+      1,
       2,
       3,
       4,
       5
-    ]
-  },
-  {
-    "name": "Srinath Ka",
-    "teams": [
-      "Ryland Royals"
-    ],
-    "seasons": [
-      1
     ]
   },
   {
