@@ -21,8 +21,17 @@ def load_results():
             return json.load(f)
     return []
 
+@st.cache_data
+def load_auctions():
+    auctions_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'auction_data.json')
+    if os.path.exists(auctions_path):
+        with open(auctions_path) as f:
+            return json.load(f)
+    return {}
+
 rosters = load_rosters()
 results = load_results()
+auctions = load_auctions()
 
 # Determine champions per season
 champions = {}
@@ -44,7 +53,7 @@ TEAM_COLORS = {
     'Ryland Royals':                 '#8b5cf6',
 }
 
-def player_badge(p, captain, marquee, substitutes, accent):
+def player_badge(p, captain, marquee, substitutes, accent, auction_price=None):
     badges = ""
     if p == captain:
         badges += f'<span style="background:{accent};color:#fff;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;">C</span>'
@@ -52,9 +61,11 @@ def player_badge(p, captain, marquee, substitutes, accent):
         badges += f'<span style="background:#f59e0b;color:#000;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:4px;">M</span>'
     if p in substitutes:
         badges += f'<span style="background:#64748b;color:#fff;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:4px;">SUB</span>'
-    return f'<div style="padding:5px 0;border-bottom:1px solid {accent}22;display:flex;align-items:center;">{p}{badges}</div>'
+    
+    price_html = f'<span style="color:#94a3b8;font-size:0.8rem;margin-left:auto;">{auction_price} pts</span>' if auction_price else ""
+    return f'<div style="padding:5px 0;border-bottom:1px solid {accent}22;display:flex;align-items:center;">{p}{badges}{price_html}</div>'
 
-def team_card(team_data, team, season_label=None, is_champion=False):
+def team_card(team_data, team, season_num=None, season_label=None, is_champion=False):
     accent = TEAM_COLORS.get(team, '#94a3b8')
     if team_data is None:
         label = season_label or team
@@ -77,7 +88,8 @@ def team_card(team_data, team, season_label=None, is_champion=False):
     if is_champion:
         title_html += f' <span title="Season Champion" style="margin-left:8px;font-size:1.1rem;">🏆</span>'
 
-    rows = "".join(player_badge(p, captain, marquee, substitutes, accent) for p in players)
+    season_auctions = auctions.get(str(season_num), {}) if season_num else {}
+    rows = "".join(player_badge(p, captain, marquee, substitutes, accent, season_auctions.get(p)) for p in players)
 
     marquee_html = (
         f'<span style="color:#94a3b8;">—</span>'
@@ -126,7 +138,7 @@ if view == "Season — all teams":
     for i, team in enumerate(TEAMS):
         with cols[i % 2]:
             is_champ = team in champions.get(season_num, [])
-            team_card(season_data.get(team), team, is_champion=is_champ)
+            team_card(season_data.get(team), team, season_num=season_num, is_champion=is_champ)
 
 # ── View 2: Team → all seasons ───────────────────────────────────────────────
 else:
@@ -155,4 +167,4 @@ else:
             s_data = rosters[str(s)].get(team)
             is_champ = team in champions.get(str(s), [])
             with cols[i % 2]:
-                team_card(s_data, team, season_label=f"Season {s}", is_champion=is_champ)
+                team_card(s_data, team, season_num=str(s), season_label=f"Season {s}", is_champion=is_champ)

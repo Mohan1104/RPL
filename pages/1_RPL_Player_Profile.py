@@ -17,6 +17,14 @@ RESULTS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'match_resu
 ROSTERS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'team_rosters.json')
 
 @st.cache_data
+def load_auctions():
+    auctions_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'auction_data.json')
+    if os.path.exists(auctions_path):
+        with open(auctions_path) as f:
+            return json.load(f)
+    return {}
+
+@st.cache_data
 def load_bios():
     if os.path.exists(BIOS_FILE):
         with open(BIOS_FILE) as f:
@@ -40,6 +48,7 @@ def load_rosters():
 bios = load_bios()
 results = load_results()
 rosters = load_rosters()
+auctions = load_auctions()
 
 # Calculate champions per season
 champions = {}
@@ -124,19 +133,28 @@ with c2:
     st.markdown(f"<div style='color:#cbd5e1;font-size:1.15rem;margin-bottom:24px;line-height:1.6;'>{description}</div>", unsafe_allow_html=True)
     
     # High-level summary metrics
-    m1, m2, m3, m4 = st.columns(4)
+    m1, m2, m3, m4, m5 = st.columns(5)
     m1.metric("Seasons", int(p_bat['season'].count()) if not p_bat.empty else 0)
     m2.metric("Total Runs", int(p_bat['runs'].sum()) if not p_bat.empty else 0)
     m3.metric("Total Wickets", int(p_bowl['wickets'].sum()) if not p_bowl.empty else 0)
     
     win_text = f"{int(player_titles)}" if player_titles.is_integer() else f"{player_titles}"
     m4.metric("🏆 Championships", win_text)
+    
+    total_auction = sum([int(auctions.get(str(s), {}).get(player, 0)) for s in range(1, 6) if str(auctions.get(str(s), {}).get(player, 0)).isdigit()])
+    m5.metric("💰 Total Auction Pts", total_auction if total_auction > 0 else "-")
 
 st.divider()
 
 # ── Season Breakdown ──
 if view == "Season Breakdown":
-    season = st.selectbox("Season", seasons_played)
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        season = st.selectbox("Season", seasons_played)
+    with c2:
+        season_auction = auctions.get(str(season), {}).get(player, "-")
+        st.markdown(f"<div style='margin-top:28px;text-align:right;font-size:1.1rem;color:#cbd5e1;'>Auction Price: <span style='color:#f59e0b;font-weight:700;'>{season_auction}</span></div>", unsafe_allow_html=True)
+
     sb = p_bat[p_bat['season'] == season]
     sw = p_bowl[p_bowl['season'] == season]
     sf = p_field[p_field['season'] == season]
@@ -258,3 +276,22 @@ else:
                 paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
                 xaxis=dict(dtick=1, title="Season"), yaxis=dict(title="Dismissals"))
             st.plotly_chart(fig, use_container_width=True)
+
+    st.divider()
+    
+    auction_seasons = []
+    auction_prices = []
+    for s in range(1, 6):
+        price = auctions.get(str(s), {}).get(player)
+        if price and str(price).isdigit():
+            auction_seasons.append(s)
+            auction_prices.append(int(price))
+            
+    if auction_seasons:
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=auction_seasons, y=auction_prices, mode='lines+markers',
+            name='Auction Points', line=dict(color='#f59e0b', width=3), marker=dict(size=10)))
+        fig.update_layout(title="Auction Points over Seasons", template='plotly_dark',
+            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            xaxis=dict(dtick=1, title="Season"), yaxis=dict(title="Points"))
+        st.plotly_chart(fig, use_container_width=True)
