@@ -1,33 +1,12 @@
 import streamlit as st
-import json, os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from RPL_data_utils import apply_theme
+import json, os, sys, html
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shared_utils import apply_theme, load_rosters, load_results, load_auctions, TEAM_COLORS
 
 st.set_page_config(page_title="Team Squads | RPL", page_icon="🏟️", layout="wide")
 apply_theme()
 
-ROSTERS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'team_rosters.json')
-RESULTS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'match_results.json')
-
-@st.cache_data
-def load_rosters():
-    with open(ROSTERS_FILE) as f:
-        return json.load(f)
-
-@st.cache_data
-def load_results():
-    if os.path.exists(RESULTS_FILE):
-        with open(RESULTS_FILE) as f:
-            return json.load(f)
-    return []
-
-@st.cache_data
-def load_auctions():
-    auctions_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'auction_data.json')
-    if os.path.exists(auctions_path):
-        with open(auctions_path) as f:
-            return json.load(f)
-    return {}
+# Removed redundant loaders
 
 rosters = load_rosters()
 results = load_results()
@@ -45,13 +24,7 @@ for r in results:
         else:
             champions[s] = [w]
 
-TEAMS = ['Gully Boyz', 'Ryland Challengers Birmingham', 'Ryland Super Kings', 'Ryland Royals']
-TEAM_COLORS = {
-    'Gully Boyz':                    '#10b981',
-    'Ryland Challengers Birmingham': '#f43f5e',
-    'Ryland Super Kings':            '#f59e0b',
-    'Ryland Royals':                 '#8b5cf6',
-}
+TEAMS = list(TEAM_COLORS.keys())
 
 def player_badge(p, captain, marquee, substitutes, accent, auction_price=None):
     badges = ""
@@ -63,14 +36,14 @@ def player_badge(p, captain, marquee, substitutes, accent, auction_price=None):
         badges += f'<span style="background:#64748b;color:#fff;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:4px;">SUB</span>'
     
     price_html = f'<span style="color:#94a3b8;font-size:0.8rem;margin-left:auto;">{auction_price} pts</span>' if auction_price else ""
-    return f'<div style="padding:5px 0;border-bottom:1px solid {accent}22;display:flex;align-items:center;">{p}{badges}{price_html}</div>'
+    return f'<div style="padding:5px 0;border-bottom:1px solid {accent}22;display:flex;align-items:center;">{html.escape(p)}{badges}{price_html}</div>'
 
 def team_card(team_data, team, season_num=None, season_label=None, is_champion=False):
     accent = TEAM_COLORS.get(team, '#94a3b8')
     if team_data is None:
         label = season_label or team
         st.markdown(f"""
-        <div style="border:1px solid {accent}33;border-radius:14px;padding:18px;margin-bottom:20px;opacity:0.4;">
+        <div class="glass-card" style="opacity: 0.4; border-color: {accent}33;">
             <div style="font-size:1rem;font-weight:700;color:{accent};">{label}</div>
             <div style="color:#94a3b8;font-size:0.85rem;margin-top:4px;">Not present this season</div>
         </div>""", unsafe_allow_html=True)
@@ -84,53 +57,50 @@ def team_card(team_data, team, season_num=None, season_label=None, is_champion=F
     squad_label = f"{core_count} players" + (f" + {len(substitutes)} sub" if substitutes else "")
     title       = season_label or team
     
-    title_html = f"{title}"
-    if is_champion:
-        title_html += f' <span title="Season Champion" style="margin-left:8px;font-size:1.1rem;">🏆</span>'
+    with st.container():
+        st.markdown(f"""<div class="glass-card" style="border-left: 5px solid {accent};">""", unsafe_allow_html=True)
+        
+        c1, c2 = st.columns([3, 1])
+        with c1:
+            st.markdown(f"### {title} {'🏆' if is_champion else ''}")
+        with c2:
+            st.markdown(f"<div style='text-align:right; color:{accent}; font-weight:700;'>{team}</div>", unsafe_allow_html=True)
 
-    season_auctions = auctions.get(str(season_num), {}) if season_num else {}
-    rows = "".join(player_badge(p, captain, marquee, substitutes, accent, season_auctions.get(p)) for p in players)
+        m1, m2, m3 = st.columns(3)
+        with m1:
+            st.caption("CAPTAIN")
+            st.markdown(f"**{captain}**")
+            if captain != '—': st.markdown(f'<span style="background:{accent};color:#fff;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;">C</span>', unsafe_allow_html=True)
+        with m2:
+            st.caption("MARQUEE")
+            st.markdown(f"**{marquee}**")
+            if marquee != '—': st.markdown('<span style="background:#f59e0b;color:#000;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;">M</span>', unsafe_allow_html=True)
+        with m3:
+            st.caption("SQUAD")
+            st.markdown(f"**{squad_label}**")
 
-    marquee_html = (
-        f'<span style="color:#94a3b8;">—</span>'
-        if marquee == '—'
-        else f'{marquee} <span style="background:#f59e0b;color:#000;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:4px;">M</span>'
-    )
-
-    st.markdown(f"""
-    <div style="border:1px solid {accent}55;border-radius:14px;padding:20px;margin-bottom:24px;background:{accent}08;">
-        <div style="font-size:1.1rem;font-weight:800;color:{accent};margin-bottom:12px;">{title_html}</div>
-        <div style="display:flex;gap:24px;margin-bottom:14px;flex-wrap:wrap;">
-            <div>
-                <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;font-weight:600;">Captain</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-top:2px;">{captain}
-                    <span style="background:{accent};color:#fff;font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;">C</span>
-                </div>
-            </div>
-            <div>
-                <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;font-weight:600;">Marquee</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-top:2px;">{marquee_html}</div>
-            </div>
-            <div>
-                <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;font-weight:600;">Squad</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-top:2px;">{squad_label}</div>
-            </div>
-        </div>
-        <div style="font-size:0.85rem;color:#cbd5e1;">{rows}</div>
-    </div>""", unsafe_allow_html=True)
+        st.markdown("<hr style='margin: 15px 0; border: none; border-top: 1px solid rgba(255,255,255,0.05);'>", unsafe_allow_html=True)
+        
+        season_auctions = auctions.get(str(season_num), {}) if season_num else {}
+        
+        # Display players in a more compact grid/list
+        for p in players:
+            price = season_auctions.get(p)
+            html_badge = player_badge(p, captain, marquee, substitutes, accent, auction_price=price)
+            st.markdown(html_badge, unsafe_allow_html=True)
+            
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 # ── Page ──────────────────────────────────────────────────────────────────────
-st.markdown("# 🏟️ Team Squads")
-st.markdown("*Rosters, captains and marquee players*")
-st.divider()
+st.markdown("# :material/groups: Team Squads")
+st.markdown("Rosters, captains and marquee players across all RPL seasons")
 
 view = st.radio("View by", ["Season — all teams", "Team — all seasons"], horizontal=True)
-st.divider()
 
 # ── View 1: Season → all teams ───────────────────────────────────────────────
 if view == "Season — all teams":
-    season = st.selectbox("Select Season", [f"Season {s}" for s in range(1, 6)])
+    season = st.selectbox("Select Season", [f"Season {s}" for s in range(1, 6)], key="global_season")
     season_num = str(int(season.split()[-1]))
     season_data = rosters[season_num]
 
@@ -142,7 +112,7 @@ if view == "Season — all teams":
 
 # ── View 2: Team → all seasons ───────────────────────────────────────────────
 else:
-    team = st.selectbox("Select Team", TEAMS)
+    team = st.selectbox("Select Team", TEAMS, key="global_team")
     accent = TEAM_COLORS[team]
 
     seasons_found = []
@@ -159,7 +129,7 @@ else:
         
         st.markdown(f"**{team}** participated in **{len(seasons_found)}** season(s): "
                     + ", ".join(f"S{s}" for s in seasons_found)
-                    + f" | 🏆 **{win_text}**")
+                    + f" | :material/workspace_premium: **{win_text}**")
         st.markdown("")
 
         cols = st.columns(2)

@@ -1,0 +1,52 @@
+/* Modern Reset and Typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+html, body, [class*="css"]  {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Glassmorphism Card System */
+.glass-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Text & Typography Polish */
+h1, h2, h3, h4, h5, h6 {
+    color: #f8fafc;
+    letter-spacing: -0.02em;
+    font-weight: 800 !important;
+}
+
+/* Custom Gradients for Metrics */
+div[data-testid="stMetricValue"] {
+    font-weight: 800 !important;
+    letter-spacing: -0.03em;
+}
+
+/* Fix DataFrame styling to look more premium */
+.stDataFrame {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Expander adjustments */
+div[data-testid="stExpander"] details {
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+}

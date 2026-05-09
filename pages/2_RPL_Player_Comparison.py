@@ -2,8 +2,8 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shared_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS
 
 st.set_page_config(page_title="Player Comparison | RPL", page_icon="📊", layout="wide")
 apply_theme()
@@ -13,18 +13,18 @@ bowl = load_bowling()
 field = load_fielding()
 players = get_player_list()
 
-st.markdown("# 📊 Player Comparison")
-st.markdown("*Compare multiple players across key performance metrics*")
-st.divider()
+st.markdown("# :material/bar_chart: Player Comparison")
+st.markdown("Compare multiple players across key performance metrics")
 
-col1, col2 = st.columns([2, 1])
-with col1:
-    selected = st.multiselect("Select Players (up to 8)", players, placeholder="Choose players to compare...")
-with col2:
-    metric = st.selectbox("Metric", ["Runs Scored", "Wickets Taken", "Fielding Dismissals"])
+with st.container(border=True):
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        selected = st.multiselect("Select Players (up to 8)", players, placeholder="Choose players to compare...")
+    with col2:
+        metric = st.selectbox("Metric", ["Runs Scored", "Wickets Taken", "Fielding Dismissals"])
 
 if len(selected) < 2:
-    st.info("Select at least 2 players to compare")
+    st.info("Select at least 2 players to compare", icon=":material/info:")
     st.stop()
 
 st.divider()

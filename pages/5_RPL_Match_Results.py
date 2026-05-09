@@ -2,44 +2,29 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 import json, os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from RPL_data_utils import apply_theme
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shared_utils import apply_theme, load_results, TEAM_COLORS, SHORT
 
 st.set_page_config(page_title="Match Results | RPL", page_icon="📋", layout="wide")
 apply_theme()
 
-RESULTS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'match_results.json')
-
-TEAM_COLORS = {
-    'Gully Boyz': '#10b981',
-    'Ryland Challengers Birmingham': '#f43f5e',
-    'Ryland Super Kings': '#f59e0b',
-    'Ryland Royals': '#8b5cf6',
-}
-SHORT = {
-    'Gully Boyz': 'GB',
-    'Ryland Challengers Birmingham': 'RCB',
-    'Ryland Super Kings': 'RSK',
-    'Ryland Royals': 'RR',
-}
 TEAMS = list(TEAM_COLORS.keys())
-
-@st.cache_data
-def load_results():
-    with open(RESULTS_FILE) as f:
-        return json.load(f)
 
 results = load_results()
 
-st.markdown("# 📋 Match Results & Standings")
-st.markdown("*Season-by-season results, points tables and head-to-head records*")
+st.markdown("# :material/list_alt: Match Results & Standings")
+st.markdown("Season-by-season results, points tables and head-to-head records")
 st.divider()
 
-tab1, tab2, tab3 = st.tabs(["📅 Match Results", "📊 Points Table", "🤝 Head-to-Head"])
+tab1, tab2, tab3 = st.tabs([":material/calendar_month: Match Results", ":material/leaderboard: Points Table", ":material/handshake: Head-to-Head"])
 
 # ── Tab 1: Match Results ─────────────────────────────────────────────────────
 with tab1:
-    season = st.selectbox("Season", [f"Season {s}" for s in range(1, 6)], key="res_season")
+    season_idx = 0
+    if "global_season" in st.session_state:
+        try: season_idx = int(st.session_state.global_season.split()[-1]) - 1
+        except: pass
+    season = st.selectbox("Season", [f"Season {s}" for s in range(1, 6)], index=season_idx, key="res_season")
     snum = int(season.split()[-1])
     matches = [m for m in results if m['season'] == snum]
 
@@ -58,7 +43,7 @@ with tab1:
             t1_bold = t2_bold = "font-weight:400;opacity:0.6;"
 
         st.markdown(f"""
-        <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div class="glass-card" style="padding:16px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div style="min-width:90px;">
                 <span style="background:{type_badge_color};color:#fff;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:20px;">{m['match_type']}</span>
             </div>
@@ -83,7 +68,11 @@ with tab1:
 
 # ── Tab 2: Points Table ──────────────────────────────────────────────────────
 with tab2:
-    season2 = st.selectbox("Season", [f"Season {s}" for s in range(1, 6)], key="pts_season")
+    season_idx2 = 0
+    if "global_season" in st.session_state:
+        try: season_idx2 = int(st.session_state.global_season.split()[-1]) - 1
+        except: pass
+    season2 = st.selectbox("Season", [f"Season {s}" for s in range(1, 6)], index=season_idx2, key="pts_season")
     snum2 = int(season2.split()[-1])
     matches2 = [m for m in results if m['season'] == snum2]
 
@@ -129,15 +118,15 @@ with tab2:
         if f['winner'] != 'Abandoned':
             color = TEAM_COLORS.get(f['winner'], '#10b981')
             st.markdown(f"""
-            <div style="text-align:center;margin-top:16px;padding:16px;border:2px solid {color};border-radius:14px;background:{color}11;">
-                <div style="font-size:2rem;">🏆</div>
-                <div style="font-size:1.2rem;font-weight:800;color:{color};">{f['winner']}</div>
-                <div style="font-size:0.85rem;color:#94a3b8;">Season {snum2} Champions</div>
-                <div style="font-size:0.8rem;color:#cbd5e1;margin-top:4px;">{f['result']}</div>
+            <div class="glass-card" style="text-align:center; margin-top:16px; border:2px solid {color}55;">
+                <div style="font-size:2.5rem;">🏆</div>
+                <div style="font-size:1.4rem; font-weight:800; color:{color};">{f['winner']}</div>
+                <div style="font-size:0.9rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em;">Season {snum2} Champions</div>
+                <div style="font-size:0.85rem; color:#cbd5e1; margin-top:8px;">{f['result']}</div>
             </div>
             """, unsafe_allow_html=True)
         else:
-            st.info(f"Season {snum2} Final: {f['result']}")
+            st.info(f"Season {snum2} Final: {f['result']}", icon=":material/info:")
 
     # Win distribution chart
     if rows:
@@ -150,25 +139,29 @@ with tab2:
             text=[next(r['W'] for r in rows if r['Team'] == t) for t in teams_with_data],
             textposition='outside'
         ))
-        fig.update_layout(title="League Wins", template='plotly_dark',
+        fig.update_layout(title="League Wins Distribution", template='plotly_dark',
             paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
             yaxis=dict(title="Wins"), height=350, showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
 
 # ── Tab 3: Head-to-Head ──────────────────────────────────────────────────────
 with tab3:
-    col1, col2 = st.columns(2)
-    with col1:
-        h2h_t1 = st.selectbox("Team A", TEAMS, index=0, key="h2h1")
-    with col2:
-        other = [t for t in TEAMS if t != h2h_t1]
-        h2h_t2 = st.selectbox("Team B", other, index=0, key="h2h2")
+    with st.container(border=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            team_idx = 0
+            if "global_team" in st.session_state and st.session_state.global_team in TEAMS:
+                team_idx = TEAMS.index(st.session_state.global_team)
+            h2h_t1 = st.selectbox("Team A", TEAMS, index=team_idx, key="h2h1")
+        with col2:
+            other = [t for t in TEAMS if t != h2h_t1]
+            h2h_t2 = st.selectbox("Team B", other, index=0, key="h2h2")
 
     h2h_matches = [m for m in results
         if (m['team1'] in [h2h_t1, h2h_t2] and m['team2'] in [h2h_t1, h2h_t2])]
 
     if not h2h_matches:
-        st.info("No head-to-head matches found")
+        st.info("No head-to-head matches found", icon=":material/search_off:")
     else:
         t1_wins = sum(1 for m in h2h_matches if m['winner'] == h2h_t1)
         t2_wins = sum(1 for m in h2h_matches if m['winner'] == h2h_t2)
@@ -197,13 +190,13 @@ with tab3:
             badge_color = '#f59e0b' if m['match_type'] == 'Final' else '#3b82f6' if 'Qualifier' in m['match_type'] or 'Round' in m['match_type'] else '#64748b'
             winner_color = TEAM_COLORS.get(m['winner'], '#94a3b8') if m['winner'] != 'Abandoned' else '#94a3b8'
             st.markdown(f"""
-            <div style="border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 16px;margin-bottom:8px;">
+            <div class="glass-card" style="padding:12px 16px; margin-bottom:8px; font-size:0.9rem;">
                 <span style="background:{badge_color};color:#fff;font-size:0.6rem;font-weight:700;padding:2px 8px;border-radius:16px;">S{m['season']} {m['match_type']}</span>
                 &nbsp;
                 <span style="font-weight:600;">{SHORT[m['team1']]} {m['team1_score']}</span>
                 <span style="color:#64748b;"> vs </span>
                 <span style="font-weight:600;">{SHORT[m['team2']]} {m['team2_score']}</span>
                 &nbsp;—&nbsp;
-                <span style="color:{winner_color};font-size:0.85rem;font-weight:600;">{m['result']}</span>
+                <span style="color:{winner_color};font-weight:600;">{m['result']}</span>
             </div>
             """, unsafe_allow_html=True)

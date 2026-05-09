@@ -3,8 +3,8 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shared_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS
 
 st.set_page_config(page_title="All-Rounder Index | RPL", page_icon="🕸️", layout="wide")
 apply_theme()
@@ -14,14 +14,14 @@ bowl = load_bowling()
 field = load_fielding()
 players = get_player_list()
 
-st.markdown("# 🕸️ All-Rounder Index")
-st.markdown("*Compare all-round performance using radar charts — normalized across all players*")
-st.divider()
+st.markdown("# :material/radar: All-Rounder Index")
+st.markdown("Compare all-round performance using radar charts — normalized across all players")
 
-selected = st.multiselect("Select Players to Compare (up to 8)", players, placeholder="Choose players...")
+with st.container(border=True):
+    selected = st.multiselect("Select Players to Compare (up to 8)", players, placeholder="Choose players...")
 
 if len(selected) < 1:
-    st.info("Select at least 1 player to view their all-rounder profile")
+    st.info("Select at least 1 player to view their all-rounder profile", icon=":material/info:")
     st.stop()
 
 st.divider()

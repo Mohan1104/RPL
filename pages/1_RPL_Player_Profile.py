@@ -1,8 +1,8 @@
 import streamlit as st
 import plotly.graph_objects as go
-import sys, os, json, random
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS, TEAM_COLORS
+import sys, os, json, random, html
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shared_utils import apply_theme, load_batting, load_bowling, load_fielding, get_player_list, COLORS, TEAM_COLORS, load_auctions, load_bios, load_results, load_rosters
 
 st.set_page_config(page_title="Player Profile | RPL", page_icon="👤", layout="wide")
 apply_theme()
@@ -12,38 +12,7 @@ bowl = load_bowling()
 field = load_fielding()
 players = get_player_list()
 
-BIOS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'player_bios.json')
-RESULTS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'match_results.json')
-ROSTERS_FILE = os.path.join(os.path.dirname(__file__), '..', 'data', 'team_rosters.json')
-
-@st.cache_data
-def load_auctions():
-    auctions_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'auction_data.json')
-    if os.path.exists(auctions_path):
-        with open(auctions_path) as f:
-            return json.load(f)
-    return {}
-
-@st.cache_data
-def load_bios():
-    if os.path.exists(BIOS_FILE):
-        with open(BIOS_FILE) as f:
-            return json.load(f)
-    return {}
-
-@st.cache_data
-def load_results():
-    if os.path.exists(RESULTS_FILE):
-        with open(RESULTS_FILE) as f:
-            return json.load(f)
-    return []
-
-@st.cache_data
-def load_rosters():
-    if os.path.exists(ROSTERS_FILE):
-        with open(ROSTERS_FILE) as f:
-            return json.load(f)
-    return {}
+# Loaders moved to RPL_data_utils.py
 
 bios = load_bios()
 results = load_results()
@@ -61,18 +30,18 @@ for r in results:
         else:
             champions[s] = [w]
 
-st.markdown("# 👤 Player Profile")
-st.markdown("*Select a player to view detailed performance across seasons*")
-st.divider()
+st.markdown("# :material/person: Player Profile")
+st.markdown("Detailed performance and auction history across all RPL seasons")
 
-if 'random_player_idx' not in st.session_state:
-    st.session_state.random_player_idx = random.randint(0, len(players) - 1)
+if 'global_player' not in st.session_state:
+    st.session_state.global_player = players[random.randint(0, len(players) - 1)]
 
-col1, col2 = st.columns([1, 2])
-with col1:
-    player = st.selectbox("Select Player", players, index=st.session_state.random_player_idx)
-with col2:
-    view = st.radio("View", ["Season Breakdown", "Aggregate", "Trends"], index=2, horizontal=True)
+with st.container(border=True):
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        player = st.selectbox("Select Player", players, key="global_player")
+    with col2:
+        view = st.radio("View", ["Season Breakdown", "Aggregate", "Trends"], index=2, horizontal=True)
 
 if not player:
     st.info("Please select a player")
@@ -94,9 +63,6 @@ teams = sorted(set(
     list(p_bat['team'].unique()) + list(p_bowl['team'].unique()) + list(p_field['team'].unique())
 ))
 
-st.markdown(f"**Teams:** {', '.join(teams)} &nbsp;|&nbsp; **Seasons:** {', '.join(str(s) for s in seasons_played)}")
-st.divider()
-
 # Calculate championships for the player
 player_titles = 0
 for s, champs in champions.items():
@@ -112,88 +78,105 @@ description = bio_data.get("description", "An RPL player.")
 photo_path = bio_data.get("photo_path", "")
 
 # ── Top Bio Section ──
-c1, c2 = st.columns([1, 4])
-with c1:
-    photo_abs_path = os.path.join(os.path.dirname(__file__), '..', photo_path) if photo_path else ""
-    if photo_abs_path and os.path.exists(photo_abs_path):
-        st.image(photo_abs_path, use_container_width=True)
-    else:
-        # Placeholder Avatar
-        initials = "".join([n[0] for n in player.split()[:2]]).upper()
-        st.markdown(f"""
-        <div style="background:#1e293b;width:100%;aspect-ratio:1/1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;font-weight:800;color:#94a3b8;border:3px solid #334155;box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-            {initials}
-        </div>
-        """, unsafe_allow_html=True)
+with st.container():
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    c1, c2 = st.columns([1, 4])
+    with c1:
+        photo_abs_path = os.path.join(os.path.dirname(__file__), '..', photo_path) if photo_path else ""
+        if photo_abs_path and os.path.exists(photo_abs_path):
+            st.image(photo_abs_path, use_container_width=True)
+        else:
+            initials = "".join([n[0] for n in player.split()[:2]]).upper()
+            st.markdown(f"""
+            <div style="background:#1e293b;width:100%;aspect-ratio:1/1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;font-weight:800;color:#94a3b8;border:3px solid #334155;">
+                {initials}
+            </div>
+            """, unsafe_allow_html=True)
+            
+        st.markdown(f"<div style='text-align:center;margin-top:16px;font-weight:800;color:#f59e0b;letter-spacing:1px;text-transform:uppercase;font-size:0.9rem;'>{role}</div>", unsafe_allow_html=True)
+
+    with c2:
+        st.markdown(f"<h2 style='margin:0;'>{html.escape(player)}</h2>", unsafe_allow_html=True)
+        st.markdown(f"**Teams:** {', '.join(html.escape(t) for t in teams)} &nbsp;|&nbsp; **Seasons:** {', '.join(str(s) for s in seasons_played)}")
+        st.markdown(f"<div style='color:#cbd5e1;font-size:1rem;margin:15px 0;line-height:1.6;'>{html.escape(description)}</div>", unsafe_allow_html=True)
         
-    st.markdown(f"<div style='text-align:center;margin-top:16px;font-weight:800;color:#f59e0b;letter-spacing:1px;text-transform:uppercase;font-size:0.9rem;'>{role}</div>", unsafe_allow_html=True)
-
-with c2:
-    st.markdown(f"<h2 style='margin-top:0;padding-top:0;'>{player}</h2>", unsafe_allow_html=True)
-    st.markdown(f"<div style='color:#cbd5e1;font-size:1.15rem;margin-bottom:24px;line-height:1.6;'>{description}</div>", unsafe_allow_html=True)
-    
-    # High-level summary metrics
-    m1, m2, m3, m4, m5 = st.columns(5)
-    m1.metric("Seasons", int(p_bat['season'].count()) if not p_bat.empty else 0)
-    m2.metric("Total Runs", int(p_bat['runs'].sum()) if not p_bat.empty else 0)
-    m3.metric("Total Wickets", int(p_bowl['wickets'].sum()) if not p_bowl.empty else 0)
-    
-    win_text = f"{int(player_titles)}" if player_titles.is_integer() else f"{player_titles}"
-    m4.metric("🏆 Championships", win_text)
-    
-    total_auction = sum([int(auctions.get(str(s), {}).get(player, 0)) for s in range(1, 6) if str(auctions.get(str(s), {}).get(player, 0)).isdigit()])
-    m5.metric("💰 Total Auction Pts", total_auction if total_auction > 0 else "-")
-
-st.divider()
+        # High-level summary metrics
+        m1, m2, m3, m4, m5 = st.columns(5)
+        m1.metric("Seasons", len(seasons_played))
+        m2.metric("Total Runs", int(p_bat['runs'].sum()) if not p_bat.empty else 0)
+        m3.metric("Total Wickets", int(p_bowl['wickets'].sum()) if not p_bowl.empty else 0)
+        
+        win_text = f"{int(player_titles)}" if player_titles.is_integer() else f"{player_titles}"
+        m4.metric("🏆 Titles", win_text)
+        
+        total_auction = sum([int(auctions.get(str(s), {}).get(player, 0)) for s in range(1, 6) if str(auctions.get(str(s), {}).get(player, 0)).isdigit()])
+        m5.metric("💰 Auction Pts", total_auction if total_auction > 0 else "-")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Season Breakdown ──
 if view == "Season Breakdown":
     c1, c2 = st.columns([3, 1])
     with c1:
-        season = st.selectbox("Season", seasons_played)
+        season_idx = 0
+        if "global_season" in st.session_state:
+            try:
+                # Find matching season or default to 0
+                s_name = st.session_state.global_season
+                if int(s_name.split()[-1]) in seasons_played:
+                    season_idx = seasons_played.index(int(s_name.split()[-1]))
+            except:
+                pass
+        
+        # We don't use key="global_season" here directly because seasons_played is restricted 
+        # to what the player played, meaning the options array changes per player.
+        # If Streamlit's session state holds a season the player didn't play, it throws a ValueError.
+        season = st.selectbox("Select Season", seasons_played, index=season_idx)
     with c2:
         season_auction = auctions.get(str(season), {}).get(player, "-")
-        st.markdown(f"<div style='margin-top:28px;text-align:right;font-size:1.1rem;color:#cbd5e1;'>Auction Price: <span style='color:#f59e0b;font-weight:700;'>{season_auction}</span></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='margin-top:28px;text-align:right;font-size:1.1rem;color:#cbd5e1;'>Auction: <span style='color:#f59e0b;font-weight:700;'>{season_auction}</span></div>", unsafe_allow_html=True)
 
     sb = p_bat[p_bat['season'] == season]
     sw = p_bowl[p_bowl['season'] == season]
     sf = p_field[p_field['season'] == season]
 
-    st.markdown("### 🏏 Batting")
+    st.markdown("### :material/Batting: Batting")
     if not sb.empty:
-        r = sb.iloc[0]
-        c1, c2, c3, c4, c5, c6 = st.columns(6)
-        c1.metric("Runs", int(r['runs']) if r['runs'] else 0)
-        c2.metric("Innings", int(r['innings']) if r['innings'] else 0)
-        c3.metric("Average", f"{r['average']:.2f}" if r['average'] else "-")
-        c4.metric("Strike Rate", f"{r['strike_rate']:.1f}" if r['strike_rate'] else "-")
-        c5.metric("Highest", int(r['highest']) if r['highest'] else 0)
-        c6.metric("4s / 6s", f"{int(r['fours'] or 0)} / {int(r['sixes'] or 0)}")
+        with st.container(border=True):
+            r = sb.iloc[0]
+            c1, c2, c3, c4, c5, c6 = st.columns(6)
+            c1.metric("Runs", int(r['runs']) if r['runs'] else 0)
+            c2.metric("Innings", int(r['innings']) if r['innings'] else 0)
+            c3.metric("Average", f"{r['average']:.2f}" if r['average'] else "-")
+            c4.metric("S/R", f"{r['strike_rate']:.1f}" if r['strike_rate'] else "-")
+            c5.metric("Highest", int(r['highest']) if r['highest'] else 0)
+            c6.metric("4s / 6s", f"{int(r['fours'] or 0)} / {int(r['sixes'] or 0)}")
     else:
         st.caption("No batting data this season")
 
-    st.markdown("### 🎳 Bowling")
+    st.markdown("### :material/Bowling: Bowling")
     if not sw.empty:
-        r = sw.iloc[0]
-        c1, c2, c3, c4, c5, c6 = st.columns(6)
-        c1.metric("Wickets", int(r['wickets']) if r['wickets'] else 0)
-        c2.metric("Overs", r['overs'] if r['overs'] else 0)
-        c3.metric("Economy", f"{r['economy']:.2f}" if r['economy'] else "-")
-        c4.metric("Average", f"{r['average']:.2f}" if r['average'] else "-")
-        c5.metric("Best", int(r['best_figures']) if r['best_figures'] else 0)
-        c6.metric("Maidens", int(r['maidens']) if r['maidens'] else 0)
+        with st.container(border=True):
+            r = sw.iloc[0]
+            c1, c2, c3, c4, c5, c6 = st.columns(6)
+            c1.metric("Wickets", int(r['wickets']) if r['wickets'] else 0)
+            c2.metric("Overs", r['overs'] if r['overs'] else 0)
+            c3.metric("Economy", f"{r['economy']:.2f}" if r['economy'] else "-")
+            c4.metric("Average", f"{r['average']:.2f}" if r['average'] else "-")
+            c5.metric("Best", int(r['best_figures']) if r['best_figures'] else 0)
+            c6.metric("Maidens", int(r['maidens']) if r['maidens'] else 0)
     else:
         st.caption("No bowling data this season")
 
-    st.markdown("### 🧤 Fielding")
+    st.markdown("### :material/Sports_handball: Fielding")
     if not sf.empty:
-        r = sf.iloc[0]
-        c1, c2, c3, c4, c5 = st.columns(5)
-        c1.metric("Dismissals", int(r['dismissals']) if r['dismissals'] else 0)
-        c2.metric("Catches", int(r['catches']) if r['catches'] else 0)
-        c3.metric("Run Outs", int(r['run_outs']) if r['run_outs'] else 0)
-        c4.metric("C&B", int(r['caught_bowled']) if r['caught_bowled'] else 0)
-        c5.metric("Stumpings", int(r['stumpings']) if r['stumpings'] else 0)
+        with st.container(border=True):
+            r = sf.iloc[0]
+            c1, c2, c3, c4, c5 = st.columns(5)
+            c1.metric("Dismissals", int(r['dismissals']) if r['dismissals'] else 0)
+            c2.metric("Catches", int(r['catches']) if r['catches'] else 0)
+            c3.metric("Run Outs", int(r['run_outs']) if r['run_outs'] else 0)
+            c4.metric("C&B", int(r['caught_bowled']) if r['caught_bowled'] else 0)
+            c5.metric("Stumpings", int(r['stumpings']) if r['stumpings'] else 0)
     else:
         st.caption("No fielding data this season")
 

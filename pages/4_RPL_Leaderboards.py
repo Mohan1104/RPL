@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from RPL_data_utils import apply_theme, load_batting, load_bowling, load_fielding
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shared_utils import apply_theme, load_batting, load_bowling, load_fielding, load_auctions
 
 import json
 
@@ -13,33 +13,34 @@ bat = load_batting()
 bowl = load_bowling()
 field = load_fielding()
 
-@st.cache_data
-def load_auctions():
-    auctions_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'auction_data.json')
-    if os.path.exists(auctions_path):
-        with open(auctions_path) as f:
-            return json.load(f)
-    return {}
-
 auctions = load_auctions()
 
-st.markdown("# 🏆 Leaderboards")
-st.markdown("*All-time and per-season rankings*")
-st.divider()
+st.markdown("# :material/workspace_premium: Leaderboards")
+st.markdown("All-time and per-season rankings across batting, bowling, and fielding")
 
-col1, col2 = st.columns([1, 1])
-with col1:
-    category = st.selectbox("Category", ["Batting", "Bowling", "Fielding", "Auction Points"])
-with col2:
-    season_opts = ["All-Time"] + [f"Season {s}" for s in range(1, 6)]
-    season_sel = st.selectbox("Season", season_opts)
-
-st.divider()
+with st.container(border=True):
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        category = st.selectbox("Category", ["Batting", "Bowling", "Fielding", "Auction Points"])
+    with col2:
+        season_opts = ["All-Time"] + [f"Season {s}" for s in range(1, 6)]
+        
+        season_idx = 0
+        if "global_season" in st.session_state:
+            s_name = st.session_state.global_season
+            if s_name in season_opts:
+                season_idx = season_opts.index(s_name)
+        
+        season_sel = st.selectbox("Season", season_opts, index=season_idx, key="leaderboard_season")
+        # We don't use key="global_season" directly because this one has "All-Time" which other pages might not support.
+        # But we can sync it back if we want, or just read from it.
 
 if season_sel == "All-Time":
     season_filter = None
 else:
     season_filter = int(season_sel.split()[-1])
+
+st.divider()
 
 if category == "Batting":
     data = bat if season_filter is None else bat[bat['season'] == season_filter]
