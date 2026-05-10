@@ -32,7 +32,6 @@ def apply_theme():
     # Hide the standard Streamlit header/footer for a cleaner look
     st.html("""
     <style>
-        header {visibility: hidden;}
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         .stMainBlockContainer {padding-top: 1rem;}
